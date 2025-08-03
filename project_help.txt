@@ -1,0 +1,5 @@
+How this project works
+
+Claude Asking points
+
+Okay i have an cool idea and i dont know if this idea has been implemented before basically what it is  is an backend automation project . let me give you an example like flutter flow its used to make frontend programming of flutter easy just like that we need to have something that will make backend programming easy like i will give my database url i will give my model and i will tell what is it that i want to do do like if i want to make an get request i will have the data base url, i will tell what is the end poin t, i will tell whats the model or shema of the data and i will tell what the reponse should look like and it will give me the result like an middle man so i dont have to code anymore for making this project anymroe
