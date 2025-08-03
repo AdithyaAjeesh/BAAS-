@@ -8,7 +8,13 @@ use serde_json::{Value, json};
 use sqlx::{Column, PgPool, Row, postgres::PgPoolOptions};
 
 pub fn routes() -> Vec<Route> {
-    routes![handle_dynamic_api, health_check]
+    routes![
+        handle_dynamic_api,
+        handle_dynamic_post,
+        handle_dynamic_put,
+        handle_dynamic_delete,
+        health_check
+    ]
 }
 
 #[get("/health")]
@@ -19,8 +25,7 @@ pub async fn health_check() -> Json<Value> {
     }))
 }
 
-// Dynamic route handler that matches: /api/{project_id}{api_path}
-#[get("/api/<project_id>/<path..>")]
+#[get("/baas/api/<project_id>/<path..>")]
 pub async fn handle_dynamic_api(
     config_db: &State<ConfigDb>,
     project_id: &str,
@@ -35,7 +40,7 @@ pub async fn handle_dynamic_api(
     .await
 }
 
-#[post("/api/<project_id>/<path..>", data = "<body>")]
+#[post("/baas/api/<project_id>/<path..>", data = "<body>")]
 pub async fn handle_dynamic_post(
     config_db: &State<ConfigDb>,
     project_id: &str,
@@ -52,7 +57,7 @@ pub async fn handle_dynamic_post(
     .await
 }
 
-#[put("/api/<project_id>/<path..>", data = "<body>")]
+#[put("/baas/api/<project_id>/<path..>", data = "<body>")]
 pub async fn handle_dynamic_put(
     config_db: &State<ConfigDb>,
     project_id: &str,
@@ -69,7 +74,7 @@ pub async fn handle_dynamic_put(
     .await
 }
 
-#[delete("/api/<project_id>/<path..>")]
+#[delete("/baas/api/<project_id>/<path..>")]
 pub async fn handle_dynamic_delete(
     config_db: &State<ConfigDb>,
     project_id: &str,
@@ -314,7 +319,6 @@ async fn handle_put_request(
 }
 
 async fn handle_delete_request(pool: &PgPool, table_name: &str) -> Result<ApiResponse, String> {
-    // For now, we'll implement a simple DELETE ALL - you might want to add WHERE conditions
     let query = format!("DELETE FROM {}", table_name);
     let result = sqlx::query(&query)
         .execute(pool)
