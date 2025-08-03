@@ -63,6 +63,7 @@ func setupRouter(projectHandler *handlers.ProjectHandler) *gin.Engine {
 			})
 		})
 		baas.POST("/projects", projectHandler.CreateProject)
+		baas.POST("/projects/:id/api", projectHandler.CreateAPIForProject)
 		baas.GET("/projects", projectHandler.ListProjects)
 		baas.GET("/projects/:id", projectHandler.GetProject)
 		baas.PUT("/projects/:id", projectHandler.UpdateProject)
